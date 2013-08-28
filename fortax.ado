@@ -21,10 +21,10 @@ cap program drop fortax
 program define fortax
 
 #delimit ;
-syntax [if] [in] , [listsys] [listfam] [listnet] [sys(string)] [sysfile(string)]
-    [age1(varname numeric)] [selfemp1(varname numeric)] [hrs1(varname numeric)] [earn1(varname numeric)] 
+syntax [if] [in] , [listsys] [listfam] [listnet] [listlbl] [sys(string)] [sysfile(string)]
+    [age1(varname numeric)] [selfemp1(varname numeric)] [hrs1(varname numeric)] [earn1(varname numeric)]
     [age2(varname numeric)] [selfemp2(varname numeric)] [hrs2(varname numeric)] [earn2(varname numeric)]
-    [couple(varname numeric)] [married(varname numeric)] [ccexp(varname numeric)] [maint(varname numeric)] 
+    [couple(varname numeric)] [married(varname numeric)] [ccexp(varname numeric)] [maint(varname numeric)]
     [nkids(varname numeric)] [kidage1(varname numeric)] [kidage2(varname numeric)] [kidage3(varname numeric)]
     [kidage4(varname numeric)] [kidage5(varname numeric)] [kidage6(varname numeric)] [kidage7(varname numeric)]
     [kidage8(varname numeric)] [kidage9(varname numeric)] [kidage10(varname numeric)] [nothads(varname numeric)]
@@ -37,15 +37,15 @@ local variables = "age1 selfemp1 hrs1 earn1 age2 selfemp2 hrs2 earn2
     kidage6 kidage7 kidage8 kidage9 kidage10 nothads tenure rent rentcap
     region ctband banddratio intdate";
 
-local netvariables = "pretaxearn posttaxearn chben matgrant fc wtc ctc incsup 
-    hben polltax polltaxben ctax ctaxben dispinc pretax tottax chcaresub fsm
+local netvariables = "pretaxearn posttaxearn chben matgrant fc wtc ctc incsup
+    hben polltax polltaxben ctax ctaxben uc dispinc pretax nettax chcaresub fsm
     taxable1 inctax1 natins1 pretaxearn1 posttaxearn1
     taxable2 inctax2 natins2 pretaxearn2 posttaxearn2";
 
 #delimit cr
 
-if ("`listsys'"~="" | "`listfam'"~="" | "`listnet'"~="") {
-    plugin call _fortax, "0" `listsys' `listfam' `listnet'
+if ("`listsys'"~="" | "`listfam'"~="" | "`listnet'"~=""  | "`listlbl'"~="") {
+    plugin call _fortax, "0" `listsys' `listfam' `listnet' `listlbl'
     exit 0
 }
 
@@ -53,7 +53,7 @@ if ("`sys'"=="" & "`sysfile'"=="") {
 	di as error "Either sys or sysfile must be specified"
 	exit 198
 	}
-	
+
 if ("`sys'"~="") {
     local sysmode = 0
 }
