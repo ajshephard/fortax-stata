@@ -27,6 +27,14 @@ module stata_save
 
 contains
 
+    pure function c_to_f_string(s,n) result(str)
+        use iso_c_binding
+        character(kind=c_char,len=1), intent(in) :: s(*)
+        integer, intent(in) :: n
+        character(len=n) :: str
+        str = transfer(s(1:n), str)
+    end function c_to_f_string
+
     subroutine c_get_sysdb(sysname,sysnamelen,ifail) bind(c)
         use fortax_sysdb, only : get_sysdb
         use, intrinsic :: iso_c_binding
