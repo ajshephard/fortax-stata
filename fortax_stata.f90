@@ -158,7 +158,7 @@ contains
     subroutine c_statafamfin() bind(c)
         use, intrinsic :: iso_c_binding
         implicit none
-        
+
         if (.not. stata_setcouple) stata_fam%couple = stata_couple
         if (.not. stata_setnkids)  stata_fam%nkids  = stata_nkids
 
@@ -179,30 +179,30 @@ contains
 
         select case(trim(adjustl(famstrFortran)))
             case('age1')
-                stata_fam%ad(1)%age= max(famval,16.0_dp)
+                stata_fam%ad(1)%age= max(famval, 16.0_dp)
             case('age2')
-                stata_fam%ad(2)%age= max(famval,16.0_dp)
+                stata_fam%ad(2)%age= max(famval, 16.0_dp)
                 stata_couple = .true.
             case('earn1')
-                stata_fam%ad(1)%earn = max(famval,0.0_dp)
+                stata_fam%ad(1)%earn = max(famval, 0.0_dp)
             case('earn2')
-                stata_fam%ad(2)%earn = max(famval,0.0_dp)
+                stata_fam%ad(2)%earn = max(famval, 0.0_dp)
                 stata_couple = .true.
             case('hrs1')
-                stata_fam%ad(1)%hrs = max(famval,0.0_dp)
+                stata_fam%ad(1)%hrs = max(famval, 0.0_dp)
             case('hrs2')
-                stata_fam%ad(2)%hrs = max(famval,0.0_dp)
+                stata_fam%ad(2)%hrs = max(famval, 0.0_dp)
                 stata_couple = .true.
             case('selfemp1')
-                stata_fam%ad(1)%selfemp = famval
+                stata_fam%ad(1)%selfemp = merge(.true., .false., famval/=0.0_dp)
             case('selfemp2')
-                stata_fam%ad(2)%selfemp = famval
+                stata_fam%ad(2)%selfemp = merge(.true., .false., famval/=0.0_dp)
                 stata_couple = .true.
             case('couple')
-                stata_fam%couple = famval
+                stata_fam%couple = merge(.true., .false., famval/=0.0_dp)
                 stata_setcouple = .true.
             case('married')
-                stata_fam%married = famval
+                stata_fam%married = merge(.true., .false., famval/=0.0_dp)
                 stata_couple = .true.
             case('ccexp')
                 stata_fam%ccexp = max(famval,0.0_dp)
