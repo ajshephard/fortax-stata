@@ -5,6 +5,10 @@ call sys_init(sys) !deallocates arrays and sets values to default
 !inctax
 sys%inctax%numbands=2
 sys%inctax%pa=63.3653846153846_dp
+sys%inctax%doPATaper=.false.
+sys%inctax%disablePATaperRounding=.false.
+sys%inctax%paTaperThresh=0.000000000000000E+000_dp
+sys%inctax%paTaperRate=0.000000000000000E+000_dp
 sys%inctax%mma=33.0769230769231_dp
 sys%inctax%ctc=0.000000000000000E+000_dp
 sys%inctax%ctcyng=0.000000000000000E+000_dp
@@ -40,10 +44,17 @@ sys%natins%c4bands(2)=390.000000000000_dp
 sys%natins%c4bands(3)=1000000.00000000_dp
  
 !chben
+sys%chben%doChBen=.true. 
 sys%chben%basic=7.25000000000000_dp
 sys%chben%kid1xtr=1.00000000000000_dp
 sys%chben%opf=5.60000000000000_dp
 sys%chben%MatGrantVal=100.000000000000_dp
+sys%chben%MatGrantOnlyFirstKid=.false.
+sys%chben%doTaper=.false.
+sys%chben%disableTaperRounding=.false.
+sys%chben%taperStart=0.000000000000000E+000_dp
+sys%chben%taperRate=0.000000000000000E+000_dp
+sys%chben%taperIsIncTax=.false.
  
 !fc
 sys%fc%dofamcred=.true. 
@@ -89,6 +100,7 @@ sys%wtc%Basic=0.000000000000000E+000_dp
 sys%wtc%CouLP=0.000000000000000E+000_dp
 sys%wtc%FT=0.000000000000000E+000_dp
 sys%wtc%MinHrsKids=0.000000000000000E+000_dp
+sys%wtc%MinHrsCouKids=0.000000000000000E+000_dp
 sys%wtc%MinHrsNoKids=0.000000000000000E+000_dp
 sys%wtc%FTHrs=0.000000000000000E+000_dp
 sys%wtc%MinAgeKids=0
@@ -107,9 +119,11 @@ sys%ntc%thr1hi=0.000000000000000E+000_dp
 sys%ntc%thr2=0.000000000000000E+000_dp
 sys%ntc%taper1=0.000000000000000E+000_dp
 sys%ntc%taper2=0.000000000000000E+000_dp
+sys%ntc%taperCTCInOneGo=.false.
 sys%ntc%MinAmt=0.000000000000000E+000_dp
  
 !incsup
+sys%incsup%doIncSup=.true. 
 sys%incsup%IncChben=.true. 
 sys%incsup%NumAgeRng=4
 sys%incsup%MainCou=62.2500000000000_dp
@@ -157,6 +171,7 @@ sys%ctax%RatioH=0.000000000000000E+000_dp
  
 !rebatesys
 sys%rebatesys%RulesUnderFC=.true. 
+sys%rebatesys%RulesUnderWFTC=.false.
 sys%rebatesys%RulesUnderNTC=.false.
 sys%rebatesys%NumAgeRng=4
 sys%rebatesys%Restrict=.false.
@@ -171,11 +186,10 @@ sys%rebatesys%DisregSin=5.00000000000000_dp
 sys%rebatesys%DisregLP=25.0000000000000_dp
 sys%rebatesys%DisregCou=10.0000000000000_dp
 sys%rebatesys%CredInDisregCC=.false.
+sys%rebatesys%ChbenIsIncome=.true. 
 sys%rebatesys%PremFam=8.70000000000000_dp
 sys%rebatesys%PremLP=10.0500000000000_dp
 sys%rebatesys%MaintDisreg=0.000000000000000E+000_dp
-sys%rebatesys%taper=0.650000000000000_dp
-sys%rebatesys%MinAmt=0.500000000000000_dp
 sys%rebatesys%MaxCC1=0.000000000000000E+000_dp
 sys%rebatesys%MaxCC2=0.000000000000000E+000_dp
 sys%rebatesys%MaxAgeCC=11
@@ -195,8 +209,16 @@ sys%rebatesys%AddKid(2)=20.0000000000000_dp
 sys%rebatesys%AddKid(3)=23.9000000000000_dp
 sys%rebatesys%AddKid(4)=31.4000000000000_dp
  
+!hben
+sys%hben%doHBen=.true. 
+sys%hben%taper=0.650000000000000_dp
+sys%hben%MinAmt=0.500000000000000_dp
+ 
 !ctaxben
+sys%ctaxben%docounciltaxben=.false.
 sys%ctaxben%taper=0.000000000000000E+000_dp
+sys%ctaxben%doEntitlementCut=.false.
+sys%ctaxben%entitlementShare=0.000000000000000E+000_dp
  
 !ccben
 sys%ccben%dopolltax=.true. 
@@ -204,6 +226,45 @@ sys%ccben%taper=0.150000000000000_dp
 sys%ccben%PropElig=0.800000000000000_dp
 sys%ccben%MinAmt=0.500000000000000_dp
 sys%ccben%CCrate=4.69269230769231_dp
+ 
+!uc
+sys%uc%doUnivCred=.false.
+sys%uc%MainCou=0.000000000000000E+000_dp
+sys%uc%YngCou=0.000000000000000E+000_dp
+sys%uc%MainSin=0.000000000000000E+000_dp
+sys%uc%YngSin=0.000000000000000E+000_dp
+sys%uc%MinAgeMain=0
+sys%uc%FirstKid=0.000000000000000E+000_dp
+sys%uc%OtherKid=0.000000000000000E+000_dp
+sys%uc%MaxCC1=0.000000000000000E+000_dp
+sys%uc%MaxCC2=0.000000000000000E+000_dp
+sys%uc%PropCC=0.000000000000000E+000_dp
+sys%uc%MaxAgeCC=0
+sys%uc%doRentCap=.false.
+sys%uc%DisregSinNoKidsHi=0.000000000000000E+000_dp
+sys%uc%DisregSinNoKidsLo=0.000000000000000E+000_dp
+sys%uc%DisregSinKidsHi=0.000000000000000E+000_dp
+sys%uc%DisregSinKidsLo=0.000000000000000E+000_dp
+sys%uc%DisregCouNoKidsHi=0.000000000000000E+000_dp
+sys%uc%DisregCouNoKidsLo=0.000000000000000E+000_dp
+sys%uc%DisregCouKidsHi=0.000000000000000E+000_dp
+sys%uc%DisregCouKidsLo=0.000000000000000E+000_dp
+sys%uc%taper=0.000000000000000E+000_dp
+sys%uc%MinAmt=0.000000000000000E+000_dp
+ 
+!statepen
+sys%statepen%doStatePen=.false.
+sys%statepen%PenAgeMan=65
+sys%statepen%PenAgeWoman=60
+ 
+!bencap
+sys%bencap%doCap=.false.
+sys%bencap%doThruUC=.false.
+sys%bencap%sinNoKids=9.999999999999990E+099_dp
+sys%bencap%sinKids=9.999999999999990E+099_dp
+sys%bencap%couNoKids=9.999999999999990E+099_dp
+sys%bencap%couKids=9.999999999999990E+099_dp
+sys%bencap%UCEarnThr=0.000000000000000E+000_dp
  
 !extra
 sys%extra%fsminappamt=.false.
