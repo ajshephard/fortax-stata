@@ -13,7 +13,7 @@
 ! You should have received a copy of the GNU General Public License
 ! along with FORTAX for Stata.  If not, see <http://www.gnu.org/licenses/>.
 
-!module that contains a database of system files
+! module that contains a database of system files
 module fortax_sysdb
 
     implicit none
@@ -36,63 +36,79 @@ contains
         ifail = 0
         select case(trim(adjustl(lower(sysname))))
         case('april91')
-#           include 'systemsf90/April91.f90'
+#           include "systemsf90/April91.f90"
         case('april92')
-#           include 'systemsf90/April92.f90'
+#           include "systemsf90/April92.f90"
         case('april93')
-#           include 'systemsf90/April93.f90'
+#           include "systemsf90/April93.f90"
         case('april94')
-#           include 'systemsf90/April94.f90'
+#           include "systemsf90/April94.f90"
         case('april95')
-#           include 'systemsf90/April95.f90'
+#           include "systemsf90/April95.f90"
         case('april96')
-#           include 'systemsf90/April96.f90'
+#           include "systemsf90/April96.f90"
         case('april97')
-#           include 'systemsf90/April97.f90'
+#           include "systemsf90/April97.f90"
         case('april98')
-#           include 'systemsf90/April98.f90'
+#           include "systemsf90/April98.f90"
         case('april99')
-#           include 'systemsf90/April99.f90'
+#           include "systemsf90/April99.f90"
         case('april00')
-#           include 'systemsf90/April00.f90'
+#           include "systemsf90/April00.f90"
         case('april01')
-#           include 'systemsf90/April01.f90'
+#           include "systemsf90/April01.f90"
         case('april02')
-#           include 'systemsf90/April02.f90'
+#           include "systemsf90/April02.f90"
         case('april03')
-#           include 'systemsf90/April03.f90'
+#           include "systemsf90/April03.f90"
         case('april04')
-#           include 'systemsf90/April04.f90'
+#           include "systemsf90/April04.f90"
         case('april05')
-#           include 'systemsf90/April05.f90'
+#           include "systemsf90/April05.f90"
         case('april06')
-#           include 'systemsf90/April06.f90'
+#           include "systemsf90/April06.f90"
         case('april07')
-#           include 'systemsf90/April07.f90'
+#           include "systemsf90/April07.f90"
         case('april08')
-#           include 'systemsf90/April08.f90'
+#           include "systemsf90/April08.f90"
         case('april09')
-#           include 'systemsf90/April09.f90'
+#           include "systemsf90/April09.f90"
+        case('april10')
+#           include "systemsf90/April10.f90"
+        case('april11')
+#           include "systemsf90/April11.f90"
+        case('april12')
+#           include "systemsf90/April12.f90"
+        case('april13')
+#           include "systemsf90/April13.f90"
         case('autumn99')
-#           include 'systemsf90/Autumn99.f90'
+#           include "systemsf90/Autumn99.f90"
         case('autumn00')
-#           include 'systemsf90/Autumn00.f90'
+#           include "systemsf90/Autumn00.f90"
         case('autumn01')
-#           include 'systemsf90/Autumn01.f90'
+#           include "systemsf90/Autumn01.f90"
         case('autumn02')
-#           include 'systemsf90/Autumn02.f90'
+#           include "systemsf90/Autumn02.f90"
         case('autumn03')
-#           include 'systemsf90/Autumn03.f90'
+#           include "systemsf90/Autumn03.f90"
         case('autumn04')
-#           include 'systemsf90/Autumn04.f90'
+#           include "systemsf90/Autumn04.f90"
         case('autumn05')
-#           include 'systemsf90/Autumn05.f90'
+#           include "systemsf90/Autumn05.f90"
         case('autumn06')
-#           include 'systemsf90/Autumn06.f90'
+#           include "systemsf90/Autumn06.f90"
         case('autumn07')
-#           include 'systemsf90/Autumn07.f90'
+#           include "systemsf90/Autumn07.f90"
         case('autumn08')
-#           include 'systemsf90/Autumn08.f90'
+#           include "systemsf90/Autumn08.f90"
+        case('autumn09')
+#           include "systemsf90/Autumn09.f90"
+        case('autumn10')
+#           include "systemsf90/Autumn10.f90"
+        case('autumn11')
+#           include "systemsf90/Autumn11.f90"
+        case('autumn12')
+#           include "systemsf90/Autumn12.f90"
         case default
             ifail = 1 !system not in database
         end select
