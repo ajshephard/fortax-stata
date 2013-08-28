@@ -103,16 +103,20 @@ contains
             income = stata_net%tu%ctax
         case('ctaxben')
             income = stata_net%tu%ctaxben
+        case('uc')
+            income = stata_net%tu%uc
         case('dispinc')
             income = stata_net%tu%dispinc
         case('pretax')
             income = stata_net%tu%pretax
-        case('tottax')
-            income = stata_net%tu%tottax
+        case('nettax')
+            income = stata_net%tu%nettax
         case('chcaresub')
             income = stata_net%tu%chcaresub
         case('fsm')
             income = stata_net%tu%fsm
+        case('totben')
+            income = stata_net%tu%totben
         case('taxable1')
             income = stata_net%ad(1)%taxable
         case('inctax1')
