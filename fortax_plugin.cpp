@@ -66,8 +66,8 @@
         int label;
         double uprate;
 
-		/*        
-          for(i=0;i < argc; i++) {
+		/*
+        for(i=0;i < argc; i++) {
               SF_display(argv[i]) ;
               SF_display("\n") ;
           }*/
@@ -98,122 +98,174 @@
                 return(198);
                 break;
         }
-            
+
         if (mode==0) {
             for(i=1;i < argc; i++) {
                 if (strcmp(argv[i],"listnet")==0)  {
                     SF_display(" {bf:{ul:listnet}}\n");
                     SF_display("\n");
-                    SF_display(" Description                  {c |} Internal name\n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
-                    SF_display(" Pre-tax Earnings             {c |} {res:pretaxearn}    \n");
-                    SF_display(" Post-tax Earnings            {c |} {res:posttaxearn}   \n");
-                    SF_display(" Pre-tax Income               {c |} {res:pretax}        \n");
-                    SF_display(" Child Benefit                {c |} {res:chben}         \n");
-                    SF_display(" Maternity Grant              {c |} {res:matgrant}      \n");
-                    SF_display(" Family Credit/WFTC           {c |} {res:fc}            \n");
-                    SF_display(" Working Tax Credit           {c |} {res:wtc}           \n");
-                    SF_display(" Child Tax Credit             {c |} {res:ctc}           \n");
-                    SF_display(" Income Support               {c |} {res:incsup}        \n");
-                    SF_display(" Housing Benefit              {c |} {res:hben}          \n");
-                    SF_display(" Community Charge             {c |} {res:polltax}       \n");
-                    SF_display(" Community Charge Benefit     {c |} {res:polltaxben}    \n");
-                    SF_display(" Council Tax                  {c |} {res:ctax}          \n");
-                    SF_display(" Council Tax Benefit          {c |} {res:ctaxben}       \n");
-                    SF_display(" Disposable Income            {c |} {res:dispinc}       \n");
-                    SF_display(" Total Tax                    {c |} {res:tottax}        \n");
-                    SF_display(" Childcare Subsidy            {c |} {res:chcaresub}     \n");
-                    SF_display(" Free School Meals            {c |} {res:fsm}           \n");
-                    SF_display(" {it:Adult 1}, Pre-tax Earnings    {c |} {res:pretaxearn1}   \n");
-                    SF_display(" {it:Adult 1}, Post-tax Earnings   {c |} {res:posttaxearn1}  \n");
-                    SF_display(" {it:Adult 1}, Taxable Income      {c |} {res:taxable1}      \n");
-                    SF_display(" {it:Adult 1}, Income Tax          {c |} {res:inctax1}       \n");
-                    SF_display(" {it:Adult 1}, National Insurance  {c |} {res:natins1}       \n");
-                    SF_display(" {it:Adult 2}, Pre-tax Earnings    {c |} {res:pretaxearn2}  \n");
-                    SF_display(" {it:Adult 2}, Post-tax Earnings   {c |} {res:posttaxearn2}  \n");
-                    SF_display(" {it:Adult 2}, Taxable Income      {c |} {res:taxable2}      \n");
-                    SF_display(" {it:Adult 2}, Income Tax          {c |} {res:inctax2}       \n");
-                    SF_display(" {it:Adult 2}, National Insurance  {c |} {res:natins2}       \n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
+                    SF_display(" Description                    {c |} Internal name\n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" Pre-tax earnings               {c |} {res:pretaxearn}    \n");
+                    SF_display(" Post-tax earnings              {c |} {res:posttaxearn}   \n");
+                    SF_display(" Child benefit                  {c |} {res:chben}         \n");
+                    SF_display(" Maternity grant                {c |} {res:matgrant}      \n");
+                    SF_display(" Family Credit/WFTC             {c |} {res:fc}            \n");
+                    SF_display(" Working Tax Credit             {c |} {res:wtc}           \n");
+                    SF_display(" Child Tax Credit               {c |} {res:ctc}           \n");
+                    SF_display(" Childcare expenditure          {c |} {res:ccexp}         \n");
+                    SF_display(" Income Support                 {c |} {res:incsup}        \n");
+                    SF_display(" Housing Benefit                {c |} {res:hben}          \n");
+                    SF_display(" Community Charge               {c |} {res:polltax}       \n");
+                    SF_display(" Community Charge Benefit       {c |} {res:polltaxben}    \n");
+                    SF_display(" Council Tax                    {c |} {res:ctax}          \n");
+                    SF_display(" Council Tax Benefit            {c |} {res:ctaxben}       \n");
+                    SF_display(" Universal Credit               {c |} {res:uc}            \n");
+                    SF_display(" Disposable Income              {c |} {res:dispinc}       \n");
+                    SF_display(" Pre-tax income                 {c |} {res:pretax}        \n");
+                    SF_display(" Total net tax                  {c |} {res:nettax}        \n");
+                    SF_display(" Childcare subsidy              {c |} {res:chcaresub}     \n");
+                    SF_display(" Free school meals value        {c |} {res:fsm}           \n");
+                    SF_display(" Total benefits and Tax Credits {c |} {res:totben}        \n");
+                    SF_display(" {it:Adult 1}, Pre-tax earnings      {c |} {res:pretaxearn1}   \n");
+                    SF_display(" {it:Adult 1}, Post-tax earnings     {c |} {res:posttaxearn1}  \n");
+                    SF_display(" {it:Adult 1}, Taxable income        {c |} {res:taxable1}      \n");
+                    SF_display(" {it:Adult 1}, Income tax            {c |} {res:inctax1}       \n");
+                    SF_display(" {it:Adult 1}, National Insurance    {c |} {res:natins1}       \n");
+                    SF_display(" {it:Adult 2}, Pre-tax earnings      {c |} {res:pretaxearn2}   \n");
+                    SF_display(" {it:Adult 2}, Post-tax earnings     {c |} {res:posttaxearn2}  \n");
+                    SF_display(" {it:Adult 2}, Taxable income        {c |} {res:taxable2}      \n");
+                    SF_display(" {it:Adult 2}, Income tax            {c |} {res:inctax2}       \n");
+                    SF_display(" {it:Adult 2}, National Insurance    {c |} {res:natins2}       \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
                 }
                 else if (strcmp(argv[i],"listfam")==0)  {
                     SF_display(" {bf:{ul:listfam}}\n");
                     SF_display("\n");
-                    SF_display(" Description                  {c |} Internal name\n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
-                    SF_display(" Couple                       {c |} {res:couple}    \n");
-                    SF_display(" Couple is married            {c |} {res:married}    \n");
-                    SF_display(" Childcare expenditure        {c |} {res:ccexp}    \n");
-                    SF_display(" Maintenance income           {c |} {res:maint}    \n");
-                    SF_display(" Number of children           {c |} {res:nkids}    \n");
-                    SF_display(" Age of child 1...10          {c |} {res:kidage1...kidage10}    \n");
-                    SF_display(" Number of other adults       {c |} {res:nothads}    \n");
-                    SF_display(" Housing tenure type          {c |} {res:tenure}    \n");
-                    SF_display(" Rent                         {c |} {res:rent}    \n");
-                    SF_display(" Rent cap                     {c |} {res:rentcap}    \n");
-                    SF_display(" Region                       {c |} {res:region}    \n");
-                    SF_display(" Council Tax band             {c |} {res:ctband}    \n");
-                    SF_display(" Local tax multipler          {c |} {res:banddratio}    \n");
-                    SF_display(" Interview date               {c |} {res:intdate}    \n");
-                    SF_display(" {it:Adult 1}, Age                 {c |} {res:age1}    \n");
-                    SF_display(" {it:Adult 1}, Earnings            {c |} {res:earn1}    \n");
-                    SF_display(" {it:Adult 1}, Hours of work       {c |} {res:hrs1}    \n");
-                    SF_display(" {it:Adult 1}, Self-employed       {c |} {res:selfemp1}    \n");
-                    SF_display(" {it:Adult 2}, Age                 {c |} {res:age2}    \n");
-                    SF_display(" {it:Adult 2}, Earnings            {c |} {res:earn2}    \n");
-                    SF_display(" {it:Adult 2}, Hours of work       {c |} {res:hrs2}    \n");
-                    SF_display(" {it:Adult 2}, Self-employed       {c |} {res:selfemp2}    \n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
+                    SF_display(" Description                    {c |} Internal name\n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" Couple                         {c |} {res:couple}    \n");
+                    SF_display(" Couple is married              {c |} {res:married}    \n");
+                    SF_display(" Childcare expenditure          {c |} {res:ccexp}    \n");
+                    SF_display(" Maintenance income             {c |} {res:maint}    \n");
+                    SF_display(" Number of children             {c |} {res:nkids}    \n");
+                    SF_display(" Age of child 1...10            {c |} {res:kidage1...kidage10}    \n");
+                    SF_display(" Number of other adults         {c |} {res:nothads}    \n");
+                    SF_display(" Housing tenure type            {c |} {res:tenure}    \n");
+                    SF_display(" Rent                           {c |} {res:rent}    \n");
+                    SF_display(" Rent cap                       {c |} {res:rentcap}    \n");
+                    SF_display(" Region                         {c |} {res:region}    \n");
+                    SF_display(" Council Tax band               {c |} {res:ctband}    \n");
+                    SF_display(" Local tax multipler            {c |} {res:banddratio}    \n");
+                    SF_display(" Interview date                 {c |} {res:intdate}    \n");
+                    SF_display(" {it:Adult 1}, Age                   {c |} {res:age1}    \n");
+                    SF_display(" {it:Adult 1}, Earnings              {c |} {res:earn1}    \n");
+                    SF_display(" {it:Adult 1}, Hours of work         {c |} {res:hrs1}    \n");
+                    SF_display(" {it:Adult 1}, Self-employed         {c |} {res:selfemp1}    \n");
+                    SF_display(" {it:Adult 2}, Age                   {c |} {res:age2}    \n");
+                    SF_display(" {it:Adult 2}, Earnings              {c |} {res:earn2}    \n");
+                    SF_display(" {it:Adult 2}, Hours of work         {c |} {res:hrs2}    \n");
+                    SF_display(" {it:Adult 2}, Self-employed         {c |} {res:selfemp2}    \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
                 }
                 else if (strcmp(argv[i],"listsys")==0) {
                     SF_display(" {bf:{ul:listsys}}\n");
                     SF_display("\n");
-                    SF_display(" System description           {c |} Internal name\n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
-                    SF_display(" April 1991                   {c |} {res:April91}    \n");
-                    SF_display(" April 1992                   {c |} {res:April92}    \n");
-                    SF_display(" April 1993                   {c |} {res:April93}    \n");            
-                    SF_display(" April 1994                   {c |} {res:April94}    \n");
-                    SF_display(" April 1995                   {c |} {res:April95}    \n");
-                    SF_display(" April 1996                   {c |} {res:April96}    \n");
-                    SF_display(" April 1997                   {c |} {res:April97}    \n");
-                    SF_display(" April 1998                   {c |} {res:April98}    \n");
-                    SF_display(" April 1999                   {c |} {res:April99}    \n");
-                    SF_display(" April 2000                   {c |} {res:April00}    \n");
-                    SF_display(" April 2001                   {c |} {res:April01}    \n");
-                    SF_display(" April 2002                   {c |} {res:April02}    \n");
-                    SF_display(" April 2003                   {c |} {res:April03}    \n");
-                    SF_display(" April 2004                   {c |} {res:April04}    \n");
-                    SF_display(" April 2005                   {c |} {res:April05}    \n");
-                    SF_display(" April 2006                   {c |} {res:April06}    \n");
-                    SF_display(" April 2007                   {c |} {res:April07}    \n");
-                    SF_display(" April 2008                   {c |} {res:April08}    \n");
-                    SF_display(" April 2009                   {c |} {res:April09}    \n");
-                    SF_display(" Autumn 1999                  {c |} {res:Autumn99}    \n");
-                    SF_display(" Autumn 2000                  {c |} {res:Autumn00}    \n");
-                    SF_display(" Autumn 2001                  {c |} {res:Autumn01}    \n");
-                    SF_display(" Autumn 2002                  {c |} {res:Autumn02}    \n");
-                    SF_display(" Autumn 2003                  {c |} {res:Autumn03}    \n");
-                    SF_display(" Autumn 2004                  {c |} {res:Autumn04}    \n");
-                    SF_display(" Autumn 2005                  {c |} {res:Autumn05}    \n");
-                    SF_display(" Autumn 2006                  {c |} {res:Autumn06}    \n");
-                    SF_display(" Autumn 2007                  {c |} {res:Autumn07}    \n");
-                    SF_display(" Autumn 2008                  {c |} {res:Autumn08}    \n");
-                    SF_display(" Autumn 2009                  {c |} {res:Autumn09}    \n");
-                    SF_display("{hline 30}{c +}{hline 16}\n");
+                    SF_display(" System description             {c |} Internal name\n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" April 1991                     {c |} {res:April91}    \n");
+                    SF_display(" April 1992                     {c |} {res:April92}    \n");
+                    SF_display(" April 1993                     {c |} {res:April93}    \n");
+                    SF_display(" April 1994                     {c |} {res:April94}    \n");
+                    SF_display(" April 1995                     {c |} {res:April95}    \n");
+                    SF_display(" April 1996                     {c |} {res:April96}    \n");
+                    SF_display(" April 1997                     {c |} {res:April97}    \n");
+                    SF_display(" April 1998                     {c |} {res:April98}    \n");
+                    SF_display(" April 1999                     {c |} {res:April99}    \n");
+                    SF_display(" April 2000                     {c |} {res:April00}    \n");
+                    SF_display(" April 2001                     {c |} {res:April01}    \n");
+                    SF_display(" April 2002                     {c |} {res:April02}    \n");
+                    SF_display(" April 2003                     {c |} {res:April03}    \n");
+                    SF_display(" April 2004                     {c |} {res:April04}    \n");
+                    SF_display(" April 2005                     {c |} {res:April05}    \n");
+                    SF_display(" April 2006                     {c |} {res:April06}    \n");
+                    SF_display(" April 2007                     {c |} {res:April07}    \n");
+                    SF_display(" April 2008                     {c |} {res:April08}    \n");
+                    SF_display(" April 2009                     {c |} {res:April09}    \n");
+                    SF_display(" April 2010                     {c |} {res:April10}    \n");
+                    SF_display(" April 2011                     {c |} {res:April11}    \n");
+                    SF_display(" April 2012                     {c |} {res:April12}    \n");
+                    SF_display(" April 2013                     {c |} {res:April13}    \n");
+                    SF_display(" Autumn 1999                    {c |} {res:Autumn99}    \n");
+                    SF_display(" Autumn 2000                    {c |} {res:Autumn00}    \n");
+                    SF_display(" Autumn 2001                    {c |} {res:Autumn01}    \n");
+                    SF_display(" Autumn 2002                    {c |} {res:Autumn02}    \n");
+                    SF_display(" Autumn 2003                    {c |} {res:Autumn03}    \n");
+                    SF_display(" Autumn 2004                    {c |} {res:Autumn04}    \n");
+                    SF_display(" Autumn 2005                    {c |} {res:Autumn05}    \n");
+                    SF_display(" Autumn 2006                    {c |} {res:Autumn06}    \n");
+                    SF_display(" Autumn 2007                    {c |} {res:Autumn07}    \n");
+                    SF_display(" Autumn 2008                    {c |} {res:Autumn08}    \n");
+                    SF_display(" Autumn 2009                    {c |} {res:Autumn09}    \n");
+                    SF_display(" Autumn 2010                    {c |} {res:Autumn10}    \n");
+                    SF_display(" Autumn 2011                    {c |} {res:Autumn11}    \n");
+                    SF_display(" Autumn 2012                    {c |} {res:Autumn12}    \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                }
+                else if (strcmp(argv[i],"listlbl")==0) {
+                    SF_display(" {bf:{ul:listlbl}}\n");
+                    SF_display("\n");
+                    SF_display(" Region ({res:fam:region})            {c |} \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" 1                              {c |} North East    \n");
+                    SF_display(" 2                              {c |} North West and Merseyside    \n");
+                    SF_display(" 3                              {c |} Yorks and Humberside    \n");
+                    SF_display(" 4                              {c |} East Midlands    \n");
+                    SF_display(" 5                              {c |} West Midlands    \n");
+                    SF_display(" 6                              {c |} Eastern    \n");
+                    SF_display(" 7                              {c |} London    \n");
+                    SF_display(" 8                              {c |} South East    \n");
+                    SF_display(" 9                              {c |} South West    \n");
+                    SF_display(" 10                             {c |} Wales    \n");
+                    SF_display(" 11                             {c |} Scotland    \n");
+                    SF_display(" 12                             {c |} Northern Ireland    \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display("\n");
+                    SF_display(" Housing tenure type ({res:fam:tenure})\n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" 1                              {c |} Own outright    \n");
+                    SF_display(" 2                              {c |} Mortgage    \n");
+                    SF_display(" 3                              {c |} Part own, part rent    \n");
+                    SF_display(" 4                              {c |} Social renter    \n");
+                    SF_display(" 5                              {c |} Private renter    \n");
+                    SF_display(" 6                              {c |} Rent free    \n");
+                    SF_display(" 7                              {c |} Other    \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display("\n");
+                    SF_display(" Council Tax band ({res:fam:ctax})    {c |} \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
+                    SF_display(" 1                              {c |} Council Tax Band A    \n");
+                    SF_display(" 2                              {c |} Council Tax Band B    \n");
+                    SF_display(" 3                              {c |} Council Tax Band C    \n");
+                    SF_display(" 4                              {c |} Council Tax Band D    \n");
+                    SF_display(" 5                              {c |} Council Tax Band E    \n");
+                    SF_display(" 6                              {c |} Council Tax Band F    \n");
+                    SF_display(" 7                              {c |} Council Tax Band G    \n");
+                    SF_display(" 8                              {c |} Council Tax Band H    \n");
+                    SF_display("{hline 32}{c +}{hline 16}\n");
                 }
             }
-            
+
             return(0);
         }
-            
-       
+
+
         //load tax system
         strcpy(sysstr,argv[SYSNAME]);
         sysstrlen = strlen(sysstr);
-        
+
         //load from database
-        if (sysmode==0) {            
+        if (sysmode==0) {
             c_get_sysdb(sysstr,&sysstrlen,&ifail);
             if (ifail>0) {
                 SF_error("system name ");
@@ -223,7 +275,7 @@
             }
         }
         //load from file (first check if file exists)
-        else {            
+        else {
             FILE *stream;
             stream = fopen(sysstr, "r");
             if (stream == NULL) {
@@ -243,21 +295,21 @@
         //uprate systems
         uprate = atof(argv[UPRATE]);
         c_statauprate(&uprate);
-        
+
         //output variable labels?
         label    = atoi(argv[LABMODE]);
         //number of family components set
         nfamlist = atoi(argv[NFAMLIST]);
         //number of net-income output variables
         nnetlist = atoi(argv[NNETLIST]);
-        
-        
+
+
         for(j = SF_in1(); j <= SF_in2(); j++) {
             if(SF_ifobs(j)) {
-  
+
                 //initialize family type
                 c_statafaminit();
-                
+
                 //set family characteristics
                 for(i=1;i <=nfamlist; i++) {
                     if ((rc = SF_vdata(i,j,&z))) return(rc);
@@ -267,23 +319,23 @@
                         c_statafamset(famstr,&famstrlen,&z);
                     }
                 }
-                
+
                 c_statafamfin();
-                
+
                 //calculate incomes
                 c_stataincome();
-                
+
                 //set net incomes
-                for(i=1;i<=nnetlist;i++) {                   
+                for(i=1;i<=nnetlist;i++) {
                     strcpy(netstr,argv[ARGLIST-1+nfamlist+i]);
                     netstrlen = strlen(netstr);
                     c_statanetget(netstr,&netstrlen,&b);
                     //copy to stata
                     if ((rc = SF_vstore(nfamlist+i, j, b))) return(rc);
-                }                
+                }
             }
         }
-        
+
         char macname[255];
         char macval[255];
 
@@ -295,9 +347,7 @@
                 c_statalabelget(netstr,&netstrlen,macval);
                 rtrim(macval);
                 if ((rc = SF_macro_save(macname,macval))) return(rc);
-                
             }
         }
         return(0) ;
     }
-
