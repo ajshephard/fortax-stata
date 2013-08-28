@@ -168,10 +168,12 @@ contains
         implicit none
         integer(c_int), intent(in) :: famstrlen
         !integer(c_int), intent(out) :: notset
-        character*famstrlen, intent(in) :: famstr
+        character(kind=c_char,len=1), intent(in) :: famstr(famstrlen)
+        character(len=famstrlen) :: famstrFortran
         real(c_double) :: famval
+        famstrFortran = c_to_f_string(famstr,famstrlen)
 
-        select case(trim(adjustl(famstr)))
+        select case(trim(adjustl(famstrFortran)))
             case('age1')
                 stata_fam%ad(1)%age= max(famval,16.0_dp)
             case('age2')
