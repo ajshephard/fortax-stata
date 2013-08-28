@@ -10,6 +10,7 @@ help for {hi:fortax}
     {cmd:listsys}
     {cmd:listfam}
     {cmd:listnet}
+    {cmd:listlbl}
     {cmd:sys(}{it:sysname}{cmd:)}
     {cmd:sysfile(}{it:filename}{cmd:)}
     {cmd:uprate(}{it:real}{cmd:)}
@@ -64,7 +65,8 @@ treated as if no value had been specified for the respective observations (so th
 
 {p 4 4 2}Given the tax and benefit system specified by {cmd:sys} or {cmd:sysfile}, together with the family characteristics 
 specified through the {it:famvar} options, {cmd:fortax} will return a number of income measures that are then accessible in 
-Stata. 
+Stata. Since all family options are passed as numerical values, the labels associated with them are available by typing
+{cmd:fortax, listlbl}.
 
 {p 4 8 2}{cmd:netout} specifies the income measures that are returned to Stata. The list of income measures that
 are accessible is available by typing {cmd:fortax, listnet}. If {cmd:netout} is not specified, then only {it:dispinc} 
@@ -85,18 +87,16 @@ and error will be raised.
 {p 4 4 2}When specifying {it:famvar} variables that are of logical type (true or false) values of zero correspond to false;
 all other values are interpreted as being true.
 
-{p 4 4 2}If options {cmd:listsys}, {cmd:listnet} or {cmd:listfam} are specified, then any further options will be ignored. 
+{p 4 4 2}If options {cmd:listsys}, {cmd:listnet}, {cmd:listfam}, or {cmd:listlbl} are specified, then any further options will be ignored. 
 These options may also be combined.
 
 {p 4 4 2}To simplify the calling syntax you may wish to consider writing a Stata program that calls {cmd:fortax}. This will be particularly relevant if the names of family characteristic variables are constant in your application.
 
-{p 4 4 2}The FORTAX library does not currently model disability related benefits, and incomes for non-working age families. 
-See the FORTAX reference manual (available from
-{browse "http://www.ucl.ac.uk/~uctpajs/fortax.htm"}) for a discussion of the implementation of the UK tax and benefit systems.
+{p 4 4 2}The FORTAX library does not currently model disability related benefits, and incomes for non-working age families.
 
 {title:Examples}
 
-{p 4 4 2}{inp: . fortax, listsys listfam listnet}
+{p 4 4 2}{inp: . fortax, listsys listfam listnet listlbl}
 
 {p 4 4 2}{inp: . fortax, sys(april02) earn1(var1) hrs1(var2) replace}
 
@@ -119,4 +119,4 @@ along with FORTAX for Stata.  If not, see {browse "http://www.gnu.org/licenses/"
 
 {title:Author}
 
-{p 4 4 2}Andrew Shephard, University College London and Institute for Fiscal Studies {browse "mailto:andrubuntu@gmail.com"}.
+{p 4 4 2}Andrew Shephard, University of Pennsylvania {browse "mailto:asheph@econ.upenn.edu"}.
