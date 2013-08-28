@@ -41,17 +41,19 @@ contains
         implicit none
         integer(c_int), intent(out) :: ifail
         integer(c_int), intent(in)  :: sysnamelen
-        character*sysnamelen, intent(in) :: sysname
-        call get_sysdb(stata_sys,sysname,ifail)
+        character(kind=c_char,len=1), intent(in) :: sysname(sysnamelen)
+        character(len=sysnamelen) :: sysnameFortran
+        sysnameFortran = c_to_f_string(sysname,sysnamelen)
+        call get_sysdb(stata_sys,sysnameFortran,ifail)
     end subroutine c_get_sysdb
- 
+
     subroutine c_statauprate(factor) bind(c)
         use, intrinsic :: iso_c_binding
         use fortax_prices, only : upratesys
         implicit none
         real(c_double), intent(in) :: factor
         if (factor.ne.1.0_dp) then
-			call upratesys(stata_sys,factor)
+            call upratesys(stata_sys,factor)
         end if
     end subroutine c_statauprate
 
@@ -68,9 +70,13 @@ contains
         implicit none
         integer(c_int), intent(in) :: netstrlen
         real(c_double), intent(out) :: income
-        character*netstrlen, intent(in) :: netstr
+        character(kind=c_char,len=1), intent(in) :: netstr(netstrlen)
+        character(len=netstrlen) :: netstrFortran
+        netstrFortran = c_to_f_string(netstr,netstrlen)
         !select case(trim(adjustl(lower(famstr))))
-        select case(trim(adjustl(netstr)))
+
+        ! this can be automated...
+        select case(trim(adjustl(netstrFortran)))
         case('pretaxearn')
             income = stata_net%tu%pretaxearn
         case('posttaxearn')
@@ -255,42 +261,52 @@ contains
 
     subroutine c_statasys(sysname,sysnamelen) bind(c)
         !use fortax_type, only : sys_t
-        use fortax_read, only : readTaxParams
+        use fortax_read, only : readFortaxParams
         !use stata_save
         use, intrinsic :: iso_c_binding
         implicit none
         integer(c_int), intent(in) :: sysnamelen
-        character*sysnamelen, intent(in) :: sysname
+        character(kind=c_char,len=1), intent(in) :: sysname(sysnamelen)
+        character(len=sysnamelen) :: sysnameFortran
+        sysnameFortran = c_to_f_string(sysname,sysnamelen)
+        call readFortaxParams(stata_sys,trim(adjustl(sysnameFortran)))
 
-        call readTaxParams(stata_sys,trim(adjustl(sysname)),'fortax')
     end subroutine c_statasys
 
     subroutine c_statalabelget(netstr,netstrlen,netlabel) bind(c)
         use, intrinsic :: iso_c_binding
         implicit none
         integer(c_int), intent(in) :: netstrlen
-        character*netstrlen, intent(in) :: netstr
-        character(len=255), intent(out) :: netlabel
+        character(kind=c_char,len=1), intent(in)  :: netstr(*)
+        character(kind=c_char,len=1), intent(out) :: netlabel(255)
+        character(len=netstrlen) :: netstrFortran
+        character(len=255) :: netlabelFortran
+        integer :: ix
+        netstrFortran = c_to_f_string(netstr,netstrlen)
 
 #       undef _$header
 #       undef _$footer
 #       define _$header
 #       define _$footer
-        select case(netstr)
+        select case(trim(adjustl(netstrFortran)))
 #       undef _$double
-#       define _$double(a,b,c) case(#a);netlabel=b
+#       define _$double(a,b,c) case(#a);netlabelFortran=b//C_NULL_CHAR
 #       include "includes/nettu_t.inc"
 #       undef _$double
-#       define _$double(a,b,c) case(#a//"1");netlabel="Adult 1, "//b
+#       define _$double(a,b,c) case(#a//"1");netlabelFortran="Adult 1, "//b//C_NULL_CHAR
 #       include "includes/netad_t.inc"
 #       undef _$double
-#       define _$double(a,b,c) case(#a//"2");netlabel="Adult 2, "//b
+#       define _$double(a,b,c) case(#a//"2");netlabelFortran="Adult 2, "//b//C_NULL_CHAR
 #       include "includes/netad_t.inc"
         end select
 
 #       undef _$header
 #       undef _$footer
 #       undef _$double
+
+        do ix=1, 255
+            netlabel(ix) = netlabelFortran(ix:ix)
+        end do
 
     end subroutine c_statalabelget
 
