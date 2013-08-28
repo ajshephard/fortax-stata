@@ -115,7 +115,7 @@ else {
 //if replace is not specified, check whether output variables exist
 if "`replace'"=="" {
     foreach var of local netoutvar {
-        cap confirm variable `var'
+        cap confirm variable `var', exact
         if _rc==0 {
             di as error "variable `var' already defined"
             exit 110
@@ -124,7 +124,7 @@ if "`replace'"=="" {
 }
 
 foreach var of local netoutvar {
-    cap confirm variable `var'
+    cap confirm variable `var', exact
     if _rc~=0 {
         qui gen double `var' = .
     }
@@ -149,7 +149,7 @@ if "`label'"=="" {
 else {
     local labmode = 1
 }
-    
+
 plugin call _fortax `varlist' `netoutvar' `if' `in', "1" `sysmode' "`sys'`sysfile'" `labmode' `nfamlist' `nnetlist' `uprate' `arglist' `netout'
 
 //label variables
