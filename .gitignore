@@ -5,3 +5,5 @@
 *.so
 *.mod
 *.exe
+*.out
+*.plugin
