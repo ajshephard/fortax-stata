@@ -1,6 +1,6 @@
 /*
-    stplugin.c, version 2.0
-    copyright (c) 2003, 2006        			StataCorp
+    stplugin.c, version 3.0
+    copyright (c) 2003, 2006, 2015 StataCorp LP
 */
 
 #include "stplugin.h"

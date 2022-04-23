@@ -1,6 +1,6 @@
 /*
-	stplugin.h, version 2.0.0
-	copyright (c) 2003, 2004, 2006                   StataCorp
+	stplugin.h, version 3.0.0
+	copyright (c) 2003, 2004, 2006, 2015 StataCorp LP
 */
 #if !defined(STPLUGIN_H)
 #define STPLUGIN_H
@@ -10,9 +10,9 @@
 #endif
 
 #define	HP9000		1
-#define OPUNIX          2
+#define OPUNIX		2
 #define APPLEMAC	3
-#define STWIN32         4
+#define STWIN32		4
 
 #ifndef SYSTEM
 #define SYSTEM		STWIN32
@@ -45,7 +45,7 @@ typedef double *	ST_dmkey ;
 #if __cplusplus
 #define STDLL	extern "C" __declspec(dllexport) ST_retcode
 #else
-#define STDLL   extern __declspec(dllexport) ST_retcode
+#define STDLL	extern __declspec(dllexport) ST_retcode
 #endif
 #endif
 
@@ -73,7 +73,7 @@ typedef struct {
 	ST_int	n ;
 } ST_matinfo ;
 
-#define SD_PLUGINMAJ	2
+#define SD_PLUGINMAJ	3
 #define SD_PLUGINMIN	0
 #define SD_PLUGINVER	SF_MAKELONG(SD_PLUGINMAJ,SD_PLUGINMIN)
 
@@ -82,7 +82,9 @@ typedef ST_int		(* ST_IV)	(void) ;
 typedef ST_int		(* ST_IS)	(char *) ;
 typedef void		(* ST_VU)	(ST_ubyte) ;
 typedef ST_boolean	(* ST_BI)	(ST_int) ;
+typedef ST_boolean	(* ST_BII)	(ST_int,ST_int) ;
 typedef ST_boolean	(* ST_BD)	(ST_double) ;
+typedef ST_int		(* ST_III)	(ST_int,ST_int) ;
 typedef ST_double	(* ST_DII)	(ST_int,ST_int) ;
 typedef ST_double	(* ST_DV)	(void) ;
 typedef ST_double	(* ST_DD)	(ST_double) ;
@@ -104,6 +106,7 @@ typedef char *		(* ST_SSI)	(char *,ST_int) ;
 typedef char *		(* ST_SSSD)	(char *,char *,ST_double) ;
 typedef char *		(* ST_SSSDM)	(char *,char *,ST_double, ST_dmkey) ;
 typedef ST_int 		(* ST_IIIS)	(ST_int, ST_int, char *) ;
+typedef ST_int 		(* ST_IIISI)	(ST_int, ST_int, char *, ST_int) ;
 
 typedef struct {
 	ST_IS		spoutsml ;
@@ -159,7 +162,7 @@ typedef struct {
 	ST_BI		selobs ;
 	ST_IV		nobs1 ;
 	ST_IV		nobs2 ;
-	ST_IV 		nvars ;    
+	ST_IV 		nvars ;
 	ST_IS		spouterr ;
 	ST_ISIIDp	safematel ;
 	ST_ISIID	safematstore ;
@@ -172,6 +175,13 @@ typedef struct {
 	ST_ISD		scalsave ;
 
 	ST_IIIS		sdata ;
+
+	ST_int2		major ;
+	ST_int2		minor ;
+	ST_BI		isstrl ;
+	ST_BII		isbinary ;
+	ST_III		sdatalen ;
+	ST_IIISI	strldata ;
 } ST_plugin ;
 
 
@@ -219,12 +229,18 @@ STDLL pginit(ST_plugin *p) ;
 #define SF_nvar			((_stata_)->nvar)
 #define SF_nvars		((_stata_)->nvars)
 
-#define SF_sstore(i,j,s)        ((_stata_)->sstore((i),(j),(s)))
-#define SF_sdata(i,j,s)         ((_stata_)->sdata((i),(j),(s)))
+#define SF_sstore(i,j,s)	((_stata_)->sstore((i),(j),(s)))
+#define SF_sdata(i,j,s)		((_stata_)->sdata((i),(j),(s)))
+#define SF_strldata(i,j,s,l)	((_stata_)->strldata((i),(j),(s),(l)))
+
+#define SF_sdatalen(i,j)	((_stata_)->sdatalen((i),(j)))
+#define SF_var_is_string(a)	((_stata_)->isstr(a))
+#define SF_var_is_strl(a)	((_stata_)->isstrl(a))
+#define SF_var_is_binary(i,j)	((_stata_)->isbinary((i),(j)))
 
 #define SV_missval		((_stata_)->missval)
 
 #define SF_is_missing(z)	((_stata_)->ismissing(z))
 #define SF_ifobs(z)		((_stata_)->selobs(z))
 
-#endif 
+#endif
