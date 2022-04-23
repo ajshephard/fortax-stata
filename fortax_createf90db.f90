@@ -14,60 +14,64 @@
 ! along with FORTAX for Stata.  If not, see <http://www.gnu.org/licenses/>.
 
 program fortax_createf90db
-    use fortax_type
-    use fortax_read
+
+    use fortax_library
+    use iso_fortran_env
+
     implicit none
+
     integer :: narg
     integer :: istat
     integer :: tmpunit
     integer :: funit
+    integer :: ppos
     logical :: err
-    character(len=1024) :: tmpname
-    character(len=1024) :: carg
-    character(len=1024) :: fpathin
-    character(len=1024) :: fpathout
-    character(len=1024) :: fileline
-    character(len=1024) :: f90name
+    character(len = 1024) :: tmpname
+    character(len = 1024) :: carg
+    character(len = 1024) :: fpathin
+    character(len = 1024) :: fpathout
+    character(len = 1024) :: fileline
+    character(len = 1024) :: f90name
 
     type(sys_t) :: sys
 
     narg = command_argument_count()
 
-    if (narg.ne.2) then
+    if (narg .ne. 2) then
         stop 'usage: ./fortax_createf90db.out syspath outpath'
     end if
 
-    call get_command_argument(1,carg)
+    call get_command_argument(1, carg)
     fpathin = trim(carg)
-    call get_command_argument(2,carg)
+    call get_command_argument(2, carg)
     fpathout = trim(carg)
 
     ! first, use system call to get contents of directory
-    open( newunit=tmpunit, status='scratch' )
-    inquire(unit=tmpunit,name=tmpname)
+    open(newunit = tmpunit, status = 'scratch')
+    inquire(unit = tmpunit, name = tmpname)
 #   ifdef _WIN32
-        call system('dir '//trim(fpathin)//'\*.xml /b >'//tmpname)
+        call system('dir ' // trim(fpathin) // '\*.json /b >' // tmpname)
 #   endif
 #   ifdef __linux
-        call system('ls '//trim(fpathin)//'/*.xml | xargs -n1 basename >'//tmpname)
+        call system('ls ' // trim(fpathin)//'/*.json | xargs -n1 basename >' // tmpname)
 #   endif
-    open(newunit=funit,file=tmpname,action='read',status='old',iostat=istat)
+    open(newunit = funit, file = tmpname, action = 'read', status = 'old', iostat = istat)
 
     do
 
-        read(funit,*,iostat=istat) fileline
+        read(funit, *, iostat = istat) fileline
 
-        if (istat==-1) then !eof
+        if (istat == -1) then !eof
             exit
-        else if (istat>0) then !error
+        else if (istat > 0) then !error
             err = .true.
-            write(*,*)  "error reading file list"
+            write(output_unit, *) "Error reading file list"
         else
-            print *, trim(fileline)
-            f90name = trim(fileline)
-            f90name(len_trim(fileline)-2:len_trim(fileline)) = 'f90'
-            call readFortaxParams(sys,trim(fpathin)//'/'//trim(fileline))
-            call sys_saveF90(sys,trim(fpathout)//'/'//f90name)
+            write(output_unit, *) trim(fileline)
+            ppos = scan(trim(fileline), ".", back = .true.)
+            if ( ppos > 0 ) f90name = fileline(1:ppos) // 'f90'
+            call FORTAX_readFortaxParams(sys, trim(fpathin) // '/' // trim(fileline))
+            call FORTAX_sys_saveF90(sys, trim(fpathout) // '/' // f90name)
         end if
 
     end do
