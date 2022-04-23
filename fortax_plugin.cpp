@@ -18,6 +18,7 @@
     #include <string.h>
     #include <stdio.h>
     #include <stdlib.h>
+    #include <ctype.h>
 
     #define MODE 0
     #define SYSMODE 1
@@ -29,11 +30,12 @@
     #define ARGLIST 7
 
     //right trim char
-    char* rtrim(char* string) {
-        char* original = string + strlen(string);
-        while(*--original == ' ');
-            *(original + 1) = '\0';
-            return string;
+    char *rtrim(char *s)
+    {
+        char* back = s + strlen(s);
+        while(isspace(*--back));
+        *(back+1) = '\0';
+        return s;
     }
 
     STDLL stata_call(int argc, char *argv[])  {
