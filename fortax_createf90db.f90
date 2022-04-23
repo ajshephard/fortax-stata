@@ -26,7 +26,7 @@ program fortax_createf90db
     integer :: funit
     integer :: ppos
     logical :: err
-    character(len = 1024) :: tmpname
+    character(len = 1024) :: listname
     character(len = 1024) :: carg
     character(len = 1024) :: fpathin
     character(len = 1024) :: fpathout
@@ -47,15 +47,14 @@ program fortax_createf90db
     fpathout = trim(carg)
 
     ! first, use system call to get contents of directory
-    open(newunit = tmpunit, status = 'scratch')
-    inquire(unit = tmpunit, name = tmpname)
+    listname = trim(adjustl(fpathout)) // '/systems.txt'
 #   ifdef _WIN32
-        call system('dir ' // trim(fpathin) // '\*.json /b >' // tmpname)
+        call system('dir ' // trim(fpathin) // '\*.json /b >' // listname)
 #   endif
 #   ifdef __linux
-        call system('ls ' // trim(fpathin)//'/*.json | xargs -n1 basename >' // tmpname)
+        call system('ls ' // trim(fpathin)//'/*.json | xargs -n1 basename >' // listname)
 #   endif
-    open(newunit = funit, file = tmpname, action = 'read', status = 'old', iostat = istat)
+    open(newunit = funit, file = listname, action = 'read', status = 'old', iostat = istat)
 
     do
 
