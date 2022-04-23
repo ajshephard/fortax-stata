@@ -69,82 +69,23 @@ contains
         netstrFortran = c_to_f_string(netstr, netstrlen)
 
         select case(trim(adjustl(netstrFortran)))
-        case("pretaxearn")
-            income = stata_net%tu%pretaxearn
-        case("posttaxearn")
-            income = stata_net%tu%posttaxearn
-        case("chben")
-            income = stata_net%tu%chben
-        case("matgrant")
-            income = stata_net%tu%matgrant
-        case("fc")
-            income = stata_net%tu%fc
-        case("wtc")
-            income = stata_net%tu%wtc
-        case("ctc")
-            income = stata_net%tu%ctc
-        case("ccexp")
-            income = stata_net%tu%ccexp
-        case("incsup")
-            income = stata_net%tu%incsup
-        case("hben")
-            income = stata_net%tu%hben
-        case("polltax")
-            income = stata_net%tu%polltax
-        case("polltaxben")
-            income = stata_net%tu%polltaxben
-        case("ctax")
-            income = stata_net%tu%ctax
-        case("ctaxben")
-            income = stata_net%tu%ctaxben
-        case("maxuc")
-            income = stata_net%tu%maxuc
-        case("uc")
-            income = stata_net%tu%uc
-        case("dispinc")
-            income = stata_net%tu%dispinc
-        case("pretax")
-            income = stata_net%tu%pretax
-        case("nettax")
-            income = stata_net%tu%nettax
-        case("chcaresub")
-            income = stata_net%tu%chcaresub
-        case("fsm")
-            income = stata_net%tu%fsm
-        case("totben")
-            income = stata_net%tu%totben
-        case("taxable1")
-            income = stata_net%ad(1)%taxable
-        case("inctax1")
-            income = stata_net%ad(1)%inctax
-        case("natins1")
-            income = stata_net%ad(1)%natins
-        case("natinsc11")
-            income = stata_net%ad(1)%natinsc1
-        case("natinsc21")
-            income = stata_net%ad(1)%natinsc2
-        case("natinsc41")
-            income = stata_net%ad(1)%natinsc4
-        case("pretaxearn1")
-            income = stata_net%ad(1)%pretaxearn
-        case("posttaxearn1")
-            income = stata_net%ad(1)%posttaxearn
-        case("taxable2")
-            income = stata_net%ad(2)%taxable
-        case("inctax2")
-            income = stata_net%ad(2)%inctax
-        case("natins2")
-            income = stata_net%ad(2)%natins
-        case("natinsc12")
-            income = stata_net%ad(2)%natinsc1
-        case("natinsc22")
-            income = stata_net%ad(2)%natinsc2
-        case("natinsc42")
-            income = stata_net%ad(2)%natinsc4
-        case("pretaxearn2")
-            income = stata_net%ad(2)%pretaxearn
-        case("posttaxearn2")
-            income = stata_net%ad(2)%posttaxearn
+        #:set name="nettu"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$")
+            income = stata_net%tu%${var}$
+        #:enddef
+        #:include "include_files.fypp"
+        #:set name="netad"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$1")
+            income = stata_net%ad(1)%${var}$
+        #:enddef
+        #:include "include_files.fypp"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$2")
+            income = stata_net%ad(2)%${var}$
+        #:enddef
+        #:include "include_files.fypp"
         case default
             income = 0.0_dp
         end select
@@ -281,82 +222,23 @@ contains
         netstrFortran = c_to_f_string(netstr, netstrlen)
 
         select case(trim(adjustl(netstrFortran)))
-        case("pretaxearn")
-            netlabelFortran = "Pre-tax earnings" // C_NULL_CHAR
-        case("posttaxearn")
-            netlabelFortran = "Post-tax earnings" // C_NULL_CHAR
-        case("chben")
-            netlabelFortran = "Child benefit" // C_NULL_CHAR
-        case("matgrant")
-            netlabelFortran = "Maternity grant" // C_NULL_CHAR
-        case("fc")
-            netlabelFortran = "Family Credit/WFTC" // C_NULL_CHAR
-        case("wtc")
-            netlabelFortran = "Working Tax Credit" // C_NULL_CHAR
-        case("ctc")
-            netlabelFortran = "Child Tax Credit" // C_NULL_CHAR
-        case("ccexp")
-            netlabelFortran = "Childcare expenditure" // C_NULL_CHAR
-        case("incsup")
-            netlabelFortran = "Income Support" // C_NULL_CHAR
-        case("hben")
-            netlabelFortran = "Housing Benefit" // C_NULL_CHAR
-        case("polltax")
-            netlabelFortran = "Community Charge" // C_NULL_CHAR
-        case("polltaxben")
-            netlabelFortran = "Community Charge Benefit" // C_NULL_CHAR
-        case("ctax")
-            netlabelFortran = "Council Tax" // C_NULL_CHAR
-        case("ctaxben")
-            netlabelFortran = "Council Tax Benefit" // C_NULL_CHAR
-        case("maxuc")
-            netlabelFortran = "Universal Credit maximum award" // C_NULL_CHAR
-        case("uc")
-            netlabelFortran = "Universal Credit" // C_NULL_CHAR
-        case("dispinc")
-            netlabelFortran = "Disposable income" // C_NULL_CHAR
-        case("pretax")
-            netlabelFortran = "Pre-tax income" // C_NULL_CHAR
-        case("nettax")
-            netlabelFortran = "Total net tax" // C_NULL_CHAR
-        case("chcaresub")
-            netlabelFortran = "Childcare subsidy" // C_NULL_CHAR
-        case("fsm")
-            netlabelFortran = "Free school meals value" // C_NULL_CHAR
-        case("totben")
-            netlabelFortran = "Total benefits and Tax Credits" // C_NULL_CHAR
-        case("taxable1")
-            netlabelFortran = "Adult 1: Taxable income" // C_NULL_CHAR
-        case("inctax1")
-            netlabelFortran = "Adult 1: Income tax" // C_NULL_CHAR
-        case("natins1")
-            netlabelFortran = "Adult 1: National Insurance" // C_NULL_CHAR
-        case("natinsc11")
-            netlabelFortran = "Adult 1: National Insurance, class 1" // C_NULL_CHAR
-        case("natinsc21")
-            netlabelFortran = "Adult 1: National Insurance, class 2" // C_NULL_CHAR
-        case("natinsc41")
-            netlabelFortran = "Adult 1: National Insurance, class 4" // C_NULL_CHAR
-        case("pretaxearn1")
-            netlabelFortran = "Adult 1: Pre-tax earnings" // C_NULL_CHAR
-        case("posttaxearn1")
-            netlabelFortran = "Adult 1: Post-tax earnings" // C_NULL_CHAR
-        case("taxable2")
-            netlabelFortran = "Adult 2: Taxable income" // C_NULL_CHAR
-        case("inctax2")
-            netlabelFortran = "Adult 2: Income tax" // C_NULL_CHAR
-        case("natins2")
-            netlabelFortran = "Adult 2: National Insurance" // C_NULL_CHAR
-        case("natinsc12")
-            netlabelFortran = "Adult 2: National Insurance, class 1" // C_NULL_CHAR
-        case("natinsc22")
-            netlabelFortran = "Adult 2: National Insurance, class 2" // C_NULL_CHAR
-        case("natinsc42")
-            netlabelFortran = "Adult 2: National Insurance, class 4" // C_NULL_CHAR
-        case("pretaxearn2")
-            netlabelFortran = "Adult 2: Pre-tax earnings" // C_NULL_CHAR
-        case("posttaxearn2")
-            netlabelFortran = "Adult 2: Post-tax earnings" // C_NULL_CHAR
+        #:set name="nettu"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$")
+            netlabelFortran = ${str}$ // C_NULL_CHAR
+        #:enddef
+        #:include "include_files.fypp"
+        #:set name="netad"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$1")
+            netlabelFortran = "${"Adult 1: " + str.strip('"')}$" // C_NULL_CHAR
+        #:enddef
+        #:include "include_files.fypp"
+        #:def fortaxdef(type, var, str, attr, **kwargs)
+        case("${var}$2")
+            netlabelFortran = "${"Adult 2: " + str.strip('"')}$" // C_NULL_CHAR
+        #:enddef
+        #:include "include_files.fypp"
         end select
 
         do ix = 1, 255
