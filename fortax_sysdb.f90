@@ -21,7 +21,7 @@ module fortax_sysdb
 contains
 
     !extract system from database. files generated using sys_saveF90
-    subroutine get_sysdb(sys,sysname,ifail)
+    subroutine get_sysdb(sys, sysname, ifail)
 
         use fortax_type, only : sys_t, sys_init
         use fortax_util, only : lower
@@ -30,7 +30,7 @@ contains
         implicit none
 
         type(sys_t), intent(out) :: sys
-        character(len=*), intent(in) :: sysname
+        character(len = *), intent(in) :: sysname
         integer, intent(out) :: ifail
 
         ifail = 0
