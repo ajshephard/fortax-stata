@@ -38,7 +38,7 @@
 
     STDLL stata_call(int argc, char *argv[])  {
 
-        void c_statasys(const char*,const int*);
+        void c_statasys(const char*, const int*);
         void c_stataincome();
         void c_statafaminit();
         void c_statafamfin();
@@ -99,9 +99,9 @@
                 break;
         }
 
-        if (mode==0) {
-            for(i=1;i < argc; i++) {
-                if (strcmp(argv[i],"listnet")==0)  {
+        if (mode == 0) {
+            for(i = 1; i < argc; i++) {
+                if (strcmp(argv[i],"listnet") == 0)  {
                     SF_display(" {bf:{ul:listnet}}\n");
                     SF_display("\n");
                     SF_display(" Description                    {c |} Internal name\n");
@@ -139,7 +139,7 @@
                     SF_display(" {it:Adult 2}, National Insurance    {c |} {res:natins2}       \n");
                     SF_display("{hline 32}{c +}{hline 16}\n");
                 }
-                else if (strcmp(argv[i],"listfam")==0)  {
+                else if (strcmp(argv[i], "listfam") ==0 )  {
                     SF_display(" {bf:{ul:listfam}}\n");
                     SF_display("\n");
                     SF_display(" Description                    {c |} Internal name\n");
@@ -168,7 +168,7 @@
                     SF_display(" {it:Adult 2}, Self-employed         {c |} {res:selfemp2}    \n");
                     SF_display("{hline 32}{c +}{hline 16}\n");
                 }
-                else if (strcmp(argv[i],"listsys")==0) {
+                else if (strcmp(argv[i], "listsys") == 0) {
                     SF_display(" {bf:{ul:listsys}}\n");
                     SF_display("\n");
                     SF_display(" System description             {c |} Internal name\n");
@@ -212,7 +212,7 @@
                     SF_display(" Autumn 2012                    {c |} {res:Autumn12}    \n");
                     SF_display("{hline 32}{c +}{hline 16}\n");
                 }
-                else if (strcmp(argv[i],"listlbl")==0) {
+                else if (strcmp(argv[i], "listlbl") == 0) {
                     SF_display(" {bf:{ul:listlbl}}\n");
                     SF_display("\n");
                     SF_display(" Region ({res:fam:region})            {c |} \n");
@@ -261,13 +261,13 @@
 
 
         //load tax system
-        strcpy(sysstr,argv[SYSNAME]);
+        strcpy(sysstr, argv[SYSNAME]);
         sysstrlen = strlen(sysstr);
 
         //load from database
-        if (sysmode==0) {
-            c_get_sysdb(sysstr,&sysstrlen,&ifail);
-            if (ifail>0) {
+        if (sysmode == 0) {
+            c_get_sysdb(sysstr, &sysstrlen, &ifail);
+            if (ifail > 0) {
                 SF_error("system name ");
                 SF_error(sysstr);
                 SF_error(" does not exist in database\n");
@@ -289,7 +289,7 @@
             //note that if there are any problems reading
             //file this will crash stata at the moment
             //because no control is passed back
-            c_statasys(sysstr,&sysstrlen);
+            c_statasys(sysstr, &sysstrlen);
         }
 
         //uprate systems
@@ -312,11 +312,11 @@
 
                 //set family characteristics
                 for(i=1;i <=nfamlist; i++) {
-                    if ((rc = SF_vdata(i,j,&z))) return(rc);
-                    if(SF_is_missing(z)==false) {
-                        strcpy(famstr,argv[ARGLIST+i-1]);
+                    if ((rc = SF_vdata(i, j, &z))) return(rc);
+                    if(SF_is_missing(z) == false) {
+                        strcpy(famstr, argv[ARGLIST + i - 1]);
                         famstrlen = strlen(famstr);
-                        c_statafamset(famstr,&famstrlen,&z);
+                        c_statafamset(famstr, &famstrlen, &z);
                     }
                 }
 
@@ -326,10 +326,10 @@
                 c_stataincome();
 
                 //set net incomes
-                for(i=1;i<=nnetlist;i++) {
-                    strcpy(netstr,argv[ARGLIST-1+nfamlist+i]);
+                for(i = 1; i <= nnetlist; i++) {
+                    strcpy(netstr, argv[ARGLIST - 1 + nfamlist + i]);
                     netstrlen = strlen(netstr);
-                    c_statanetget(netstr,&netstrlen,&b);
+                    c_statanetget(netstr, &netstrlen, &b);
                     //copy to stata
                     if ((rc = SF_vstore(nfamlist+i, j, b))) return(rc);
                 }
@@ -339,14 +339,14 @@
         char macname[255];
         char macval[255];
 
-        if (label>0) {
-            for(i=1;i<=nnetlist;i++) {
+        if (label > 0) {
+            for(i = 1; i <= nnetlist; i++) {
                 sprintf(macname, "%s%d", "_fortaxlabel",i);
-                strcpy(netstr,argv[ARGLIST-1+nfamlist+i]);
+                strcpy(netstr, argv[ARGLIST - 1 + nfamlist + i]);
                 netstrlen = strlen(netstr);
-                c_statalabelget(netstr,&netstrlen,macval);
+                c_statalabelget(netstr, &netstrlen, macval);
                 rtrim(macval);
-                if ((rc = SF_macro_save(macname,macval))) return(rc);
+                if ((rc = SF_macro_save(macname, macval))) return(rc);
             }
         }
         return(0) ;
